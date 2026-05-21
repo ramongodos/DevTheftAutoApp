@@ -1,12 +1,11 @@
 import { Routes } from '@angular/router';
 import { CatalogoComponent } from './components/catalogo/catalogo.component';
-import { DetalleComponent } from './components/detalle/detalle.component';
-import { FormularioComponent } from './components/formulario/formulario.component';
+import { DetalleComponent } from './components/catalogo/detalle.component';
+import { FormularioComponent } from './components/catalogo/formulario.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'catalogo', pathMatch: 'full' },
-  { path: 'catalogo', component: CatalogoComponent },
+  { path: '', component: CatalogoComponent },
   { path: 'detalle', component: DetalleComponent },
   { path: 'formulario', component: FormularioComponent },
-  { path: '**', redirectTo: 'catalogo' }
+  { path: '**', redirectTo: '' } // Redirección por si escriben cualquier otra ruta
 ];

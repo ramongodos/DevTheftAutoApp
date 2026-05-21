@@ -18,7 +18,6 @@ export class FormularioComponent {
     private videojuegoService: VideojuegoService,
     private router: Router
   ) {
-    // Definimos el formulario reactivo con validaciones requeridas
     this.miFormulario = this.fb.group({
       titulo: ['', [Validators.required]],
       genero: ['', [Validators.required]],

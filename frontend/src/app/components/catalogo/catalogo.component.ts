@@ -13,11 +13,19 @@ import { VideojuegoService, Videojuego } from '../../services/videojuego.service
 export class CatalogoComponent implements OnInit {
   videojuegos: Videojuego[] = [];
 
-  constructor(private videojuegoService: VideojuegoService, private router: Router) {}
+  constructor(
+    private videojuegoService: VideojuegoService,
+    private router: Router
+  ) {}
 
-  ngOnInit(): OnInit {
-    this.videojuegoService.obtenerTodos().subscribe(data => {
-      this.videojuegos = data;
+  ngOnInit(): void {
+    this.videojuegoService.obtenerTodos().subscribe({
+      next: (data) => {
+        this.videojuegos = data;
+      },
+      error: (err) => {
+        console.error('Error al obtener videojuegos:', err);
+      }
     });
   }
 
