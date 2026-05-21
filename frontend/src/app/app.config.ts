@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-=======
+
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
@@ -13,4 +12,3 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient() // Activado globalmente
   ]
 };
->>>>>>> 02909773f95174c3a11eb4c515a9282ef2fe82ac

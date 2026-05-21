@@ -1,6 +1,34 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+export interface Videojuego {
+  id?: number;
+  titulo: string;
+  genero: string;
+  fechaLanzamiento: string;
+  estudioId: number;
+}
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class Videojuego {}
+export class VideojuegoService {
+  private apiUrl = 'http://localhost:8080/api/videojuegos';
+
+  public videojuegoSeleccionado = signal<Videojuego | null>(null);
+
+  constructor(private http: HttpClient) { }
+
+  obtenerTodos(): Observable<Videojuego[]> {
+    return this.http.get<Videojuego[]>(this.apiUrl);
+  }
+
+  obtenerPorId(id: number): Observable<Videojuego> {
+    return this.http.get<Videojuego>(`${this.apiUrl}/${id}`);
+  }
+
+  crearVideojuego(videojuego: Videojuego): Observable<Videojuego> {
+    return this.http.post<Videojuego>(this.apiUrl, videojuego);
+  }
+}
