@@ -1,0 +1,23 @@
+<div style="padding: 20px; font-family: sans-serif;">
+  <h2>📝 Añadir Nuevo Videojuego</h2>
+  <form [formGroup]="miFormulario" (ngSubmit)="guardar()" style="display: flex; flex-direction: column; max-width: 300px; gap: 10px;">
+    
+    <label>Título:</label>
+    <input type="text" formControlName="titulo" style="padding: 8px;">
+    <span *ngIf="miFormulario.get('titulo')?.invalid && miFormulario.get('titulo')?.touched" style="color: red; font-size: 12px;">El título es obligatorio</span>
+
+    <label>Género:</label>
+    <input type="text" formControlName="genero" style="padding: 8px;">
+
+    <label>Fecha Lanzamiento:</label>
+    <input type="date" formControlName="fechaLanzamiento" style="padding: 8px;">
+
+    <label>ID Estudio (1:M):</label>
+    <input type="number" formControlName="estudioId" style="padding: 8px;">
+
+    <div style="display: flex; gap: 10px; margin-top: 10px;">
+      <button type="submit" [disabled]="miFormulario.invalid" style="padding: 10px; background: #28a745; color: white; border: none; cursor: pointer;">Guardar</button>
+      <button type="button" routerLink="/catalogo" style="padding: 10px; background: #6c757d; color: white; border: none; cursor: pointer;">Cancelar</button>
+    </div>
+  </form>
+</div>
