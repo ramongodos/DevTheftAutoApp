@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
-import { VideojuegoService, Videojuego } from '../../services/videojuego.service';
+import { VideojuegoService, Videojuego } from '../../services/videojuego'; 
 
 @Component({
   selector: 'app-catalogo',

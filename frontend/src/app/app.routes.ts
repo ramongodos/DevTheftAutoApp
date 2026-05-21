@@ -7,5 +7,5 @@ export const routes: Routes = [
   { path: '', component: CatalogoComponent },
   { path: 'detalle', component: DetalleComponent },
   { path: 'formulario', component: FormularioComponent },
-  { path: '**', redirectTo: '' } // Redirección por si escriben cualquier otra ruta
+  { path: '**', redirectTo: '' }
 ];

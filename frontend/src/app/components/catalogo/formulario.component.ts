@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { VideojuegoService } from '../../services/videojuego.service';
-
+import { VideojuegoService } from '../../services/videojuego'; 
 @Component({
   selector: 'app-formulario',
   standalone: true,
@@ -28,9 +27,14 @@ export class FormularioComponent {
 
   guardar() {
     if (this.miFormulario.valid) {
-      this.videojuegoService.crearVideojuego(this.miFormulario.value).subscribe(() => {
-        alert('¡Videojuego guardado con éxito!');
-        this.router.navigate(['/catalogo']);
+      this.videojuegoService.crearVideojuego(this.miFormulario.value).subscribe({
+        next: () => {
+          alert('¡Videojuego guardado con éxito!');
+          this.router.navigate(['/catalogo']);
+        },
+        error: (err) => {
+          console.error('Error al guardar:', err);
+        }
       });
     }
   }
