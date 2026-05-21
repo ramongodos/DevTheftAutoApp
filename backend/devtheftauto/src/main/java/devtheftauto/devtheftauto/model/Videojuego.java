@@ -25,7 +25,7 @@ public class Videojuego {
     private Double precio;
     private Boolean disponible = true;
 
-    // Clave foránea — referencia al género padre
+    
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "genero_id", nullable = false)
     private Genero genero;
