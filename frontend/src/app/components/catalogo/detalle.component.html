@@ -1,8 +1,11 @@
 <div style="padding: 20px; font-family: sans-serif;" *ngIf="juego()">
   <h2>🔍 Ficha Técnica: {{ juego()?.titulo }}</h2>
   <p><strong>Género:</strong> {{ juego()?.genero }}</p>
-  <p><strong>Fecha de Lanzamiento:</strong> {{ juego()?.fechaLanzamiento }}</p>
-  <p><strong>ID del Estudio Asociado:</strong> {{ juego()?.estudioId }}</p>
+  <p><strong>Plataforma:</strong> {{ juego()?.plataforma }}</p>
+  <p><strong>Año:</strong> {{ juego()?.anio }}</p>
+  <p><strong>Calificación:</strong> {{ juego()?.calificacion }}</p>
+  <p><strong>Precio:</strong> {{ juego()?.precio }}</p>
+  <p><strong>Descripción:</strong> {{ juego()?.descripcion }}</p>
   <br>
   <button routerLink="/catalogo" style="padding: 10px; background: #6c757d; color: white; border: none; cursor: pointer;">Volver al Catálogo</button>
 </div>
