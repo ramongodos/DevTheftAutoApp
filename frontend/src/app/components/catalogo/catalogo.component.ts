@@ -87,7 +87,7 @@ import { VideojuegoService } from '../../services/videojuego';
               <img [src]="j.imagen" [alt]="j.titulo" loading="lazy" />
               <div class="card-body">
                 <div class="card-top">
-                  <span class="badge" [class]="'badge-' + j.genero">{{ j.genero }}</span>
+                  <span class="badge" [class]="'badge-' + j.genero.nombre">{{ j.genero.nombre }}</span>
                   <span class="rating">★ {{ j.calificacion }}</span>
                 </div>
                 <div class="card-title">{{ j.titulo }}</div>

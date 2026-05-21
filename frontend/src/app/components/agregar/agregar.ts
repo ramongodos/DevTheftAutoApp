@@ -1,7 +1,7 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { VideojuegoService } from '../../services/videojuego';
+import { VideojuegoService, Genero } from '../../services/videojuego';
  
 @Component({
   selector: 'app-agregar',
@@ -73,8 +73,8 @@ import { VideojuegoService } from '../../services/videojuego';
               <select id="genero" formControlName="genero"
                 [class.invalid-field]="f['genero'].invalid && f['genero'].touched">
                 <option value="" disabled>Selecciona un género</option>
-                @for (g of generos; track g) {
-                  <option [value]="g">{{ g }}</option>
+                @for (g of generosList(); track g.id) {
+                  <option [value]="g.id">{{ g.nombre }}</option>
                 }
               </select>
               @if (f['genero'].invalid && f['genero'].touched) {
@@ -154,14 +154,17 @@ import { VideojuegoService } from '../../services/videojuego';
     </div>
   `
 })
-export class Agregar {
+export class Agregar implements OnInit {
   private fb = inject(FormBuilder);
   private svc = inject(VideojuegoService);
   private router = inject(Router);
  
   exito = signal(false);
+  generosList = signal<Genero[]>([]);
  
-  generos = ['RPG', 'Acción', 'Aventura', 'Deportes', 'Terror', 'Sandbox', 'Estrategia', 'Simulación', 'Plataformas', 'Lucha'];
+  ngOnInit(): void {
+    this.svc.obtenerGeneros().subscribe(data => this.generosList.set(data));
+  }
  
   form = this.fb.group({
     titulo:       ['', [Validators.required, Validators.minLength(2)]],
@@ -182,7 +185,7 @@ export class Agregar {
     const v = this.form.value;
     this.svc.agregar({
       titulo:       v.titulo!,
-      genero:       v.genero!,
+      genero:       { id: Number(v.genero) } as Genero,
       plataforma:   v.plataforma!,
       precio:       Number(v.precio),
       anio:         Number(v.anio),

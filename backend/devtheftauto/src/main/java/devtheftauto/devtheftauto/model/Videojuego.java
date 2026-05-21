@@ -24,6 +24,10 @@ public class Videojuego {
     private Integer anio;
     private Double precio;
     private Boolean disponible = true;
+    private String plataforma;
+    private String descripcion;
+    private String imagen;
+    private Double calificacion;
 
     
     @ManyToOne(fetch = FetchType.EAGER)

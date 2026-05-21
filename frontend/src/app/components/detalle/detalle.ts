@@ -54,7 +54,7 @@ import { VideojuegoService, Videojuego } from '../../services/videojuego';
             <div class="meta">
               <div class="meta-item">
                 <span class="meta-lbl">Género</span>
-                <span class="badge" [class]="'badge-' + juego()!.genero">{{ juego()!.genero }}</span>
+                <span class="badge" [class]="'badge-' + juego()!.genero.nombre">{{ juego()!.genero.nombre }}</span>
               </div>
               <div class="meta-item">
                 <span class="meta-lbl">Plataforma</span>
@@ -104,11 +104,14 @@ export class Detalle implements OnInit {
  
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    const found = this.svc.getById(id);
-    if (!found) {
-      this.router.navigate(['/catalogo']);
-      return;
+    const cached = this.svc.getById(id);
+    if (cached) {
+      this.juego.set(cached);
+    } else {
+      this.svc.obtenerPorId(id).subscribe({
+        next: j => this.juego.set(j),
+        error: () => this.router.navigate(['/catalogo'])
+      });
     }
-    this.juego.set(found);
   }
 }

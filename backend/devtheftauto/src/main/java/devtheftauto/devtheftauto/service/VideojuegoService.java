@@ -4,7 +4,9 @@ package devtheftauto.devtheftauto.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import devtheftauto.devtheftauto.model.Genero;
 import devtheftauto.devtheftauto.model.Videojuego;
+import devtheftauto.devtheftauto.repository.GeneroRepository;
 import devtheftauto.devtheftauto.repository.VideojuegoRepository;
 
 
@@ -16,8 +18,8 @@ import devtheftauto.devtheftauto.repository.VideojuegoRepository;
 @RequiredArgsConstructor // Inyecta de forma automática el repositorio mediante constructor
 public class VideojuegoService {
 
-    // Conexión directa con la persistencia de datos de videojuegos
     private final VideojuegoRepository videojuegoRepository;
+    private final GeneroRepository generoRepository;
 
     /**
      * Recupera la lista completa de videojuegos existentes en el catálogo.
@@ -35,31 +37,37 @@ public class VideojuegoService {
 
     /**
      * Almacena un nuevo videojuego en el sistema.
-     * El objeto recibido ya incluye internamente la asociación al ID del género padre.
+     * Carga el Genero completo desde la BD para evitar errores de entidad desvinculada.
      */
     public Videojuego create(Videojuego videojuego) {
+        resolverGenero(videojuego);
         return videojuegoRepository.save(videojuego);
     }
     
     /**
      * Lógica de actualización (PUT).
-     * Control de seguridad: Primero comprueba si el videojuego realmente existe en la BD.
-     * Si existe, le asigna el ID correspondiente para asegurar que se edite ese registro y no se cree uno nuevo.
      */
     public Videojuego update(Long id, Videojuego v) {
         if (videojuegoRepository.existsById(id)) {
-            v.setId(id); // Vincula obligatoriamente el ID de la URL al objeto modificado
-            return videojuegoRepository.save(v); // Al llevar ID, .save() actúa como un UPDATE de SQL
+            resolverGenero(v);
+            v.setId(id);
+            return videojuegoRepository.save(v);
         }
-        return null; // Si no existía el juego, no hace nada y devuelve null
+        return null;
     }
     
     /**
      * Lógica para eliminar un videojuego.
-     * Envía la orden directa al repositorio para borrar la fila correspondiente en la tabla H2.
      */
     public void delete(Long id) {
         videojuegoRepository.deleteById(id);
+    }
+
+    /** Carga el Genero completo a partir del ID recibido desde el cliente. */
+    private void resolverGenero(Videojuego v) {
+        if (v.getGenero() != null && v.getGenero().getId() != null) {
+            generoRepository.findById(v.getGenero().getId()).ifPresent(v::setGenero);
+        }
     }
 }
 
